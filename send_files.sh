@@ -5,18 +5,22 @@ FN=$4
 
 if [[ -z "$ENDPOINT" ]]; then
         echo NO ENDPOINT PASSED
+        exit 1
 fi
 
 if [[ -z "$RND" ]]; then
         echo NO RANDON NUMBER PASSED
+        exit 1
 fi
 
 if [[ -z "$PINAME" ]]; then
         echo NO PINAME PASSED
+        exit 1
 fi
 
 if [[ -z "$FN" ]]; then
         echo NO FILE NAME GIVEN
+        exit 1
 fi
 
 
