@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -OO
 from routes import *
 
 if __name__ == '__main__':
