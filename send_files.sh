@@ -26,4 +26,4 @@ fi
 
 FN=`readlink -f ${FN}`
 
-curl -X POST --form foto=@"${FN}" http://${ENDPOINT}-sauloal.c9.io/${RND}/add/${PINAME}
+curl -X POST --form foto=@"${FN}" http://${ENDPOINT}-sauloal.c9.io/${RND}/data/add/${PINAME}
