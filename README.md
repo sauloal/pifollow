@@ -1,6 +1,6 @@
 INSTALL:
-sudo easy_install flask
-sudo easy_install flask-sqlalchemy
+    sudo easy_install flask
+    sudo easy_install flask-sqlalchemy
 
 ROUTES:
     '/' - 404
@@ -17,23 +17,23 @@ ROUTES:
 
 
 LIST:
-curl http://pi-sauloal.c9.io/$RND/
+    curl http://pi-sauloal.c9.io/$RND/
 
 GET:
-curl http://pi-sauloal.c9.io/$RND/get/<FILE PATH>
+    curl http://pi-sauloal.c9.io/$RND/get/<FILE PATH>
 
 GET DB:
-curl http://pi-sauloal.c9.io/$RND/getdb/
+    curl http://pi-sauloal.c9.io/$RND/getdb/
 
 SHOW:
-curl http://pi-sauloal.c9.io/$RND/show/[ALL|LAST]/
+    curl http://pi-sauloal.c9.io/$RND/show/[ALL|LAST]/
 
 DISPLAY:
-curl http://pi-sauloal.c9.io/$RND/display/[ALL|LAST]/
+    curl http://pi-sauloal.c9.io/$RND/display/[ALL|LAST]/
 
 LOG:
-curl http://pi-sauloal.c9.io/$RND/log/<PI_ID>/
-curl http://pi-sauloal.c9.io/$RND/log/<PI_ID>/<PRIVATE_ID>/
+    curl http://pi-sauloal.c9.io/$RND/log/<PI_ID>/
+    curl http://pi-sauloal.c9.io/$RND/log/<PI_ID>/<PRIVATE_ID>/
 
 ADD:
-curl -X POST --form foto=@"$FN" http://pi-sauloal.c9.io/$RND/add/<PI_ID>/
+    curl -X POST --form foto=@"$FN" http://pi-sauloal.c9.io/$RND/add/<PI_ID>/
