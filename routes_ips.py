@@ -41,38 +41,36 @@ def show_log_last(pi_id):
 ##
 # LOG
 ##
-@app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/')
-def log(pi_id):
-
+@app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/', defaults={'int_ip': ''})
+@app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/<int_ip>/')
+def log(pi_id, int_ip):
     if request.headers.getlist("X-Forwarded-For"):
-        ip = request.headers.getlist("X-Forwarded-For")[0]
+        ext_ip = request.headers.getlist("X-Forwarded-For")[0]
         #print " fwd      ", request.headers.getlist("X-Forwarded-For")
-        #print " forwarded", ip
-        #print " request  ", ip
+        #print " forwarded", ext_ip
+        #print " request  ", request.remote_addr
 
     else:
-        ip = request.remote_addr
-        print " request  ", ip
+        ext_ip = request.remote_addr
+        print " request  ", ext_ip
 
-    #print request.access_route
-
-    info = Ips(pi_id, request.remote_addr, '')
+    info = Ips(pi_id, ext_ip, int_ip)
 
     db.session.add(info)
     db.session.commit()
 
-    return jsonify({'pi_id': pi_id, 'ip': request.remote_addr, 'error': False}), 200
+    return jsonify({'pi_id': pi_id, 'ext_ip': ext_ip, 'int_ip': int_ip, 'error': False}), 200
 
 
-@app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/<pi_ip>/')
-def log_ip(pi_id, pi_ip):
-
-    info = Ips(pi_id, request.remote_addr, pi_ip)
-
-    db.session.add(info)
-    db.session.commit()
-
-    return jsonify({'pi_id': pi_id, 'external_ip': request.remote_addr, 'internal_ip': pi_ip, 'error': False}), 200
+#@app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/<pi_ip>/')
+#def log_ip(pi_id, pi_ip):
+#
+#    info = Ips(pi_id, request.remote_addr, pi_ip)
+#
+#    db.session.add(info)
+#    db.session.commit()
+#
+#    return jsonify({'pi_id': pi_id, 'external_ip': request.remote_addr, 'internal_ip': pi_ip, 'error': False}), 200
 
 
 
