@@ -45,10 +45,10 @@ def gen_table(qry, RNG_ID, meta=""):
             data   = { 'id':info.pi_id,'fn':info.filename,'fs':info.filesize,'fsc':conv_size(info.filesize),'tm':info.when,'fp':info.filepath,'rg':RNG_ID }
 
             if any([info.filename.lower().endswith(x) for x in images]):
-                field  = """<tr><td><img src="/%(rg)s/get/%(fp)s"/></tr></td>""" % data
+                field  = """<tr><td><img src="/%(rg)s/data/get/%(fp)s"/></tr></td>""" % data
 
             else:
-                field  = """<tr><td><a href="/%(rg)s/get/%(fp)s">%(fp)s</a></tr></td>""" % data
+                field  = """<tr><td><a href="/%(rg)s/data/get/%(fp)s">%(fp)s</a></tr></td>""" % data
 
             res   += """
 <tr><td><strong>%(id)s</strong> :: %(fn)s :: <small>%(tm)s - %(fsc)s</small></td></tr>

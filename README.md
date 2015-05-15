@@ -12,18 +12,19 @@ ROUTES:
 
     /UUID/data/get/<path:path>         - Get file
     /UUID/data/del/<path:path>         - Delete file
-    /UUID/data/list/all/[<pi_id>]      - List all files
     /UUID/data/list/ids/               - List all IDs
-    /UUID/data/list/filepath/[<pi_id>] - List all file paths
-    /UUID/data/list/filename/[<pi_id>] - List all file names
-    /UUID/data/show/all/[<pi_id>]      - Show [HTML] all data
-    /UUID/data/show/last/[<pi_id>]     - Show [HTML[ last data
+    /UUID/data/list/all/[<pi_id>]/     - List all files
+    /UUID/data/list/last/[<pi_id>]/    - List last files
+    /UUID/data/list/filepath/[<pi_id>]/- List all file paths
+    /UUID/data/list/filename/[<pi_id>]/- List all file names
+    /UUID/data/show/all/[<pi_id>]/     - Show [HTML] all data
+    /UUID/data/show/last/[<pi_id>]/    - Show [HTML[ last data
     /UUID/data/add/<pi_id>             - ['POST'] Add data from PI_ID
 
-    /UUID/ips/list/all/[<pi_id>]       - Display all images
-    /UUID/ips/list/last/[<pi_id>]      - Display last images for each PI_ID
-    /UUID/add/<pi_id>/                 - log external IP from PI_ID
-    /UUID/add/<pi_id>/<pi_ip>/         - log both internal and external IPs from PI_ID
+    /UUID/ips/list/all/[<pi_id>]/      - Display all images
+    /UUID/ips/list/last/[<pi_id>]/     - Display last images for each PI_ID
+    /UUID/ips/add/<pi_id>/             - log external IP from PI_ID
+    /UUID/ips/add/<pi_id>/<pi_ip>/     - log both internal and external IPs from PI_ID
 
     # routes.py:     @app.route('/')
     # routes.py:     @app.route('/'+app.config['RNG_ID']+'/')
@@ -33,6 +34,8 @@ ROUTES:
     # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/del/<path:path>')
     # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/all/', defaults={'pi_id': None})
     # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/all/<pi_id>/')
+    # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/last/', defaults={'pi_id': None})
+    # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/last/<pi_id>/')
     # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/ids/')
     # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/filepath/', defaults={'pi_id': None})
     # routes_data.py:@app.route('/'+app.config['RNG_ID']+'/data/list/filepath/<pi_id>/')

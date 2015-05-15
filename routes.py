@@ -29,19 +29,26 @@ def get_endpoints():
                     'GET':
                         [
                             '/',
-                            '/get/<file_path>',
-                            '/del/<file_path>',
                             '/getdb/',
-                            '/show/all',
-                            '/show/last',
-                            '/display/all/',
-                            '/display/last/',
-                            '/log/<pi_id>/',
-                            '/log/<pi_id>/<pi_internal_ip>/'
+
+                            '/data/get/<file_path>',
+                            '/data/del/<file_path>',
+                            '/data/list/all/[<pi_id>]/',
+                            '/data/list/last/[<pi_id>]/',
+                            '/data/list/filepath/[<pi_id>]/',
+                            '/data/list/filename/[<pi_id>]/',
+                            '/data/list/ids/',
+                            '/data/show/all/[<pi_id>]/',
+                            '/data/show/last/[<pi_id>]/',
+
+                            '/ips/list/all/[<pi_id>]/',
+                            '/ips/list/last/[<pi_id>]/',
+                            '/ips/add/<pi_id>/',
+                            '/ips/add/<pi_id>/<pi_internal_ip>/'
                         ],
                     'POST':
                         [
-                            '/add/<pi_id>[POST]'
+                            '/data/add/<pi_id>/'
                         ],
                     'error': False
                 }

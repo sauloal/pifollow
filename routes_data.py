@@ -66,13 +66,42 @@ def get_del(path):
     #return Response(content)
 
 
+@app.route('/'+app.config['RNG_ID']+'/data/add/<pi_id>', methods=['POST'])
+def add(pi_id):
+    file     = request.files['foto']
+    filename = file.filename
+    filesize = request.content_length
+
+    path = os.path.join(app.config['UPLOAD_FOLDER'], pi_id                    )
+    dst  = os.path.join(pi_id                      , secure_filename(filename))
+    dstn = os.path.join(app.config['UPLOAD_FOLDER'], dst                      )
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    file.save(dstn)
+
+    print "ADDING ID %s NAME %s SIZE %d PATH %s" % (pi_id, filename, filesize, dst)
+    info     = Data(pi_id, filename, filesize, dst)
+
+    db.session.add(info)
+
+    try:
+        db.session.commit()
+
+        return jsonify({'pi_id': pi_id, 'filename': filename, 'filesize': filesize, 'error': False}), 200
+
+    except:
+        return jsonify({'pi_id': pi_id, 'filename': filename, 'filesize': filesize, 'error': True, 'message': 'record exists'}), 501
+
+
 
 ##
 # LISTS
 ##
 @app.route('/'+app.config['RNG_ID']+'/data/list/all/', defaults={'pi_id': None})
 @app.route('/'+app.config['RNG_ID']+'/data/list/all/<pi_id>/')
-def list_data(pi_id):
+def list_data_all(pi_id):
     try:
         if pi_id is None:
             data = Data.query.all()
@@ -88,6 +117,23 @@ def list_data(pi_id):
         return jsonify({'message': str(e), 'error': True}), 200
 
 
+@app.route('/'+app.config['RNG_ID']+'/data/list/last/', defaults={'pi_id': None})
+@app.route('/'+app.config['RNG_ID']+'/data/list/last/<pi_id>/')
+def list_data_last(pi_id):
+    try:
+        if pi_id is None:
+            data = Data.query.group_by(Data.pi_id)
+
+        else:
+            data = Data.query.filter( Data.pi_id == pi_id ).group_by(Data.pi_id)
+
+        data = [ x.as_dict() for x in data ]
+
+        return jsonify({'ids': data, 'error': False}), 200
+
+    except Exception as e:
+        return jsonify({'message': str(e), 'error': True}), 200
+
 
 @app.route('/'+app.config['RNG_ID']+'/data/list/ids/')
 def list_data_ids():
@@ -98,6 +144,7 @@ def list_data_ids():
 
     except Exception as e:
         return jsonify({'message': str(e), 'error': True}), 200
+
 
 @app.route('/'+app.config['RNG_ID']+'/data/list/filepath/', defaults={'pi_id': None})
 @app.route('/'+app.config['RNG_ID']+'/data/list/filepath/<pi_id>/')
@@ -159,47 +206,13 @@ def display_image_last(pi_id):
 
     try:
         if pi_id is None:
-            res = gen_table( Data.query.group_by(Data.pi_id), app.config['RNG_ID'] )
+            res = gen_table( Data.query.group_by(Data.pi_id), app.config['RNG_ID'], meta=meta )
 
         else:
-            res = gen_table( Data.query.group_by(Data.pi_id).filter(Data.pi_id == pi_id), app.config['RNG_ID'] )
+            res = gen_table( Data.query.group_by(Data.pi_id).filter(Data.pi_id == pi_id), app.config['RNG_ID'], meta=meta )
 
         return res, 200
 
     except Exception as e:
         print "error", e
         return jsonify({ 'error': True, 'message': str(e) }), 501
-
-
-
-##
-# ADD
-##
-@app.route('/'+app.config['RNG_ID']+'/data/add/<pi_id>', methods=['POST'])
-def add(pi_id):
-    file     = request.files['foto']
-    filename = file.filename
-    filesize = request.content_length
-
-    path = os.path.join(app.config['UPLOAD_FOLDER'], pi_id                    )
-    dst  = os.path.join(pi_id                      , secure_filename(filename))
-    dstn = os.path.join(app.config['UPLOAD_FOLDER'], dst                      )
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    file.save(dstn)
-
-    print "ADDING ID %s NAME %s SIZE %d PATH %s" % (pi_id, filename, filesize, dst)
-    info     = Data(pi_id, filename, filesize, dst)
-
-    db.session.add(info)
-
-    try:
-        db.session.commit()
-
-        return jsonify({'pi_id': pi_id, 'filename': filename, 'filesize': filesize, 'error': False}), 200
-
-    except:
-        return jsonify({'pi_id': pi_id, 'filename': filename, 'filesize': filesize, 'error': True, 'message': 'record exists'}), 501
-
