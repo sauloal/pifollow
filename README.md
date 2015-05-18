@@ -19,7 +19,7 @@
     /UUID/data/list/filename/[<pi_id>]/- [GET ][JSON] List all file names
     /UUID/data/show/all/[<pi_id>]/     - [GET ][HTML] Show all data
     /UUID/data/show/last/[<pi_id>]/    - [GET ][HTML] Show last data
-    /UUID/data/add/<pi_id>             - [POST:foto ] Add data from PI_ID
+    /UUID/data/add/<pi_id>             - [POST:foto ][JSON] Add data from PI_ID
 
     /UUID/ips/list/all/[<pi_id>]/      - [GET ][JSON] Display all images
     /UUID/ips/list/last/[<pi_id>]/     - [GET ][JSON] Display last images for each PI_ID
