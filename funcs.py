@@ -1,5 +1,6 @@
 #http://stackoverflow.com/questions/20646822/how-to-serve-static-files-in-flask
 import os
+import datetime
 
 from setup import *
 
@@ -64,3 +65,32 @@ def gen_table(qry, RNG_ID, meta=""):
 
     except:
         raise
+
+
+def is_too_late(min_time=8, max_time=19, dst=2):
+    curr = datetime.datetime.time(datetime.datetime.now())
+
+    #print "curr"  , curr
+    #print "tzname", curr.tzname()
+    #print "dst"   , curr.dst()
+
+    hour = curr.hour
+
+    #print "hour"  , hour
+
+    hour += dst # CET time
+
+    if hour >= 24:
+        hour -= 24
+
+    is_less_than_min =  hour < min_time
+    is_more_than_max =  hour > max_time
+    is_late          = (is_less_than_min or is_more_than_max)
+
+    #print "hour %d <%d=%s >%d=%s is late: %s" % (hour, min_time, is_less_than_min, max_time, is_more_than_max, is_late)
+
+    if is_late:
+        return True
+
+    else:
+        return False

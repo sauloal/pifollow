@@ -44,6 +44,13 @@ def show_log_last(pi_id):
 @app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/', defaults={'int_ip': ''})
 @app.route('/'+app.config['RNG_ID']+'/ips/add/<pi_id>/<int_ip>/')
 def log(pi_id, int_ip):
+    if is_too_late():
+        print "Too late. go to sleep. I'm not storing your dumb IP. Ok. just this once"
+    else:
+        print "So nice of you to work this hard. Your IP is welcome."
+
+
+
     if request.headers.getlist("X-Forwarded-For"):
         ext_ip = request.headers.getlist("X-Forwarded-For")[0]
         #print " fwd      ", request.headers.getlist("X-Forwarded-For")

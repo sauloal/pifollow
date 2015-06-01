@@ -76,6 +76,14 @@ def add(pi_id):
     dst  = os.path.join(pi_id                      , secure_filename(filename))
     dstn = os.path.join(app.config['UPLOAD_FOLDER'], dst                      )
 
+    if is_too_late():
+        print "Too late. go to sleep. I'm not storing your dumb file"
+        return jsonify({'pi_id': pi_id, 'filename': filename, 'filesize': filesize, 'error': False, 'extra': "too late. go to sleep. I'm not storing your dumb file"}), 200
+    else:
+        print "So nice of you to work this hard. Move along."
+
+
+
     if not os.path.exists(path):
         os.makedirs(path)
 
@@ -202,7 +210,7 @@ def display_image_all(pi_id):
 @app.route('/'+app.config['RNG_ID']+'/data/show/last/', defaults={'pi_id': None})
 @app.route('/'+app.config['RNG_ID']+'/data/show/last/<pi_id>/')
 def display_image_last(pi_id):
-    meta = """<head><meta http-equiv="refresh" content="60" /></head>"""
+    meta = """<head><meta http-equiv="refresh" content="300" /></head>"""
 
     try:
         if pi_id is None:
